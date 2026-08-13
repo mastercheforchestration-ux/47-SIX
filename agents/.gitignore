@@ -1,0 +1,6 @@
+.env
+client/data/*.json
+__pycache__/
+*.pyc
+node_modules/
+.env.chatterbate.json

@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../../../../Downloads/47ronin-main/47ronin-main"
+		}
+	],
+	"settings": {
+		"js/ts.tsdk.promptToUseWorkspaceVersion": true
+	}
+}

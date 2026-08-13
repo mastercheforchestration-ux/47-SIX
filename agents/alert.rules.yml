@@ -1,0 +1,47 @@
+groups:
+  - name: chatterbate_alerts
+    rules:
+      - alert: BackendDown
+        expr: chatterbate_up == 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Backend is down"
+          description: "The backend at {{ $labels.instance }} is not responding."
+
+      - alert: DataIntegrityFailure
+        expr: chatterbate_data_ok == 0
+        for: 10s
+        labels:
+          severity: warning
+        annotations:
+          summary: "Data integrity failure"
+          description: "Schema or data validation failed on {{ $labels.instance }}."
+
+      - alert: ProblemCountNonZero
+        expr: chatterbate_problem_count > 0
+        for: 10s
+        labels:
+          severity: warning
+        annotations:
+          summary: "Problem count detected"
+          description: "Backend {{ $labels.instance }} reported {{ $value }} problems."
+
+      - alert: MemorySpike
+        expr: chatterbate_memory_rss_bytes > 300000000
+        for: 30s
+        labels:
+          severity: warning
+        annotations:
+          summary: "High memory usage"
+          description: "RSS memory exceeded threshold on {{ $labels.instance }}."
+
+      - alert: UptimeReset
+        expr: chatterbate_uptime_seconds < 10
+        for: 5s
+        labels:
+          severity: info
+        annotations:
+          summary: "Backend restarted"
+          description: "Backend {{ $labels.instance }} restarted recently."

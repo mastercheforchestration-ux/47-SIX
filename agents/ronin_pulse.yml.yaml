@@ -1,0 +1,38 @@
+name: 47 Ronin Ghost Mode (V1)
+
+on:
+  schedule:
+    - cron: '0 * * * *'   # Every hour
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  industrial-pulse:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install -r requirements.txt
+requests
+beautifulsoup4
+
+
+      - name: Run Omni Master Pulse
+        run: python3 omni_master_pulse.py
+
+      - name: Upload Logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: ronin-pulse-logs
+          path: data/logs/
